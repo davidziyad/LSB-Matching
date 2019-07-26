@@ -7,7 +7,7 @@ import numpy as np
 import pdb
 
 def string_to_binary(st):
-    return ' '.join(format(ord(x), 'b') for x in st)
+    return ''.join(format(ord(x), 'b') for x in st)
 
 def decimal_to_binary(x):
     return int(bin(x)[2:])
@@ -57,12 +57,12 @@ def LSB_Matching_encode(image_array, pixel_ind, message): #flatten image to be 1
         
     return image_array, original_pixel_values, pixel_ind[:len(message)]
 
-def LSB_Matching_decode(encoded_image, original_values, indicies):
+def LSB_Matching_decode(encoded_image, original_values, indices):
     message = ''
 #    pdb.set_trace()
     for i in range(0, len(original_values)-1, 2):
-        first_value_enc = encoded_image[indicies[i]]
-        second_value_enc = encoded_image[indicies[i+1]]
+        first_value_enc = encoded_image[indices[i]]
+        second_value_enc = encoded_image[indices[i+1]]
         
         first_orig = original_values[i]
         second_orig = original_values[i+1]
@@ -96,21 +96,19 @@ image = cv2.resize(image, (rows,cols))
 image_array = np.array(image)
 string_to_encode = 'This is a message I would like to encode if possible!'
 
-
 # flatten to 1D array
 flatten_image = image_array.flatten()
 
 # get all indicies 
-indicies = random.sample(range(1, flatten_image.shape[0]), flatten_image.shape[0]-1)
+indices = random.sample(range(1, flatten_image.shape[0]), flatten_image.shape[0]-1)
 
 # binarise message
-string_binary_withspace = string_to_binary(string_to_encode)
-string_binary = string_binary_withspace.replace(" ", "")
+string_binary = string_to_binary(string_to_encode)
+encoded_image, original_pixel_values, indices = LSB_Matching_encode(flatten_image, indices, string_binary)
 
-encoded_image, original_pixel_values, indicies = LSB_Matching_encode(flatten_image, indicies, string_binary)
+decoded_message = LSB_Matching_decode(encoded_image, original_pixel_values, indices)
 
-
-decoded_message = LSB_Matching_decode(encoded_image, original_pixel_values, indicies)
+string_binary == decoded_message
 
 # plot results
 #encoded_image = encoded_image.reshape((rows,cols))
