@@ -1,10 +1,6 @@
 # LSB Matching
 import math
-import cv2
-import matplotlib.pyplot as plt
-import random
 import numpy as np
-import pdb
 
 def string_to_binary(st):
     return ''.join(format(ord(x), 'b') for x in st)
@@ -88,30 +84,3 @@ def LSB_Matching_decode(encoded_image, original_values, indices):
                 message = message + str(1 - message_i_plus_1)
             
     return message
-
-rows = 128
-cols = 128
-image = cv2.imread('images.jpeg', 0)
-image = cv2.resize(image, (rows,cols))
-image_array = np.array(image)
-string_to_encode = 'This is a message I would like to encode if possible!'
-
-# flatten to 1D array
-flatten_image = image_array.flatten()
-
-# get all indicies 
-indices = random.sample(range(1, flatten_image.shape[0]), flatten_image.shape[0]-1)
-
-# binarise message
-string_binary = string_to_binary(string_to_encode)
-encoded_image, original_pixel_values, indices = LSB_Matching_encode(flatten_image, indices, string_binary)
-
-decoded_message = LSB_Matching_decode(encoded_image, original_pixel_values, indices)
-
-string_binary == decoded_message
-
-# plot results
-#encoded_image = encoded_image.reshape((rows,cols))
-#fig, (ax_1, ax_2) = plt.subplots(1, 2, sharey=True, sharex=True)
-#ax_1.imshow(image)
-#ax_2.imshow(encoded_image)
