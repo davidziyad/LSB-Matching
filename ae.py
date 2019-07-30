@@ -5,7 +5,7 @@ from keras.models import Model, load_model
 from keras import backend as K
 import matplotlib.pyplot as plt
 
-im = cv.imread('im.jpg')
+im = cv.imread('images.jpeg')
 im = cv.cvtColor(im, cv.COLOR_BGR2RGB)
 im = cv.resize(im, (128, 128))
 
