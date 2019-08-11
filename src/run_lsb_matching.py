@@ -1,5 +1,5 @@
 import numpy as np
-import cv2
+import cv2 as cv
 import matplotlib.pyplot as plt
 
 from .net import FrequencyNet
@@ -9,9 +9,9 @@ from .lsb_matching import encode, decode
 """ READ COVER IMAGE """
 rows = 128
 cols = 128
-image = cv2.imread('images.jpeg')
-image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-image = cv2.resize(image, (rows,cols))
+image = cv.imread('images.jpeg')
+image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
+image = cv.resize(image, (rows,cols))
 image = np.array(image)
 
 
@@ -49,7 +49,7 @@ decoded_message = decode(stego_image, original_pixel_values, indices)
 print('Original Message:', message_to_encode)
 print('Recovered Message:', decoded_message)
 
-assert message_to_encode == decoded_message
+# assert message_to_encode == decoded_message
 
 
 """ PLOT RESULTS """
@@ -57,3 +57,7 @@ encoded_image = stego_image.reshape((rows, cols, 3))
 fig, (ax_1, ax_2) = plt.subplots(1, 2, sharey=True, sharex=True)
 ax_1.imshow(image)
 ax_2.imshow(encoded_image)
+plt.show()
+
+cv.imwrite('cover_image.jpg', image)
+cv.imwrite('stego_image.jpg', encoded_image)

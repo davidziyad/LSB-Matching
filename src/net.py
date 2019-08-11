@@ -14,7 +14,6 @@ class FrequencyNet:
 
         self.frequency_net = None
         self.encoder_net = None
-        self.frequency_image = None
 
         self._create_model()
 
@@ -73,4 +72,4 @@ class FrequencyNet:
         a = np.array(a)
         a = a.mean(0)
 
-        self.frequency_image = (a / a.max() * 255.0).astype('uint8')
+        return (a / a.max() * 255.0).astype('uint8')
