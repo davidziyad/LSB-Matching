@@ -40,7 +40,7 @@ encoded_image, original_pixel_values, indices = LSB_Matching_encode(image_to_enc
 
 decoded_message = LSB_Matching_decode(encoded_image, original_pixel_values, indices)
 
-print string_binary == decoded_message
+print(string_binary == decoded_message)
 
 
 # Decode binary message
