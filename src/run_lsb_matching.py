@@ -14,6 +14,7 @@ image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 image = cv2.resize(image, (rows,cols))
 image = np.array(image)
 
+
 """ DEFINE MESSAGE TO EMBED """
 message_to_encode = 'This is a message I would like to encode if possible!'
 
@@ -40,4 +41,19 @@ stego_image, original_pixel_values, indices = \
     encode(image_to_encode, indices, message_to_encode)
 
 
+""" RECOVER MESSAGE """
+decoded_message = decode(stego_image, original_pixel_values, indices)
 
+
+""" VALIDATE RESULTS """
+print('Original Message:', message_to_encode)
+print('Recovered Message:', decoded_message)
+
+assert message_to_encode == decoded_message
+
+
+""" PLOT RESULTS """
+encoded_image = stego_image.reshape((rows, cols, 3))
+fig, (ax_1, ax_2) = plt.subplots(1, 2, sharey=True, sharex=True)
+ax_1.imshow(image)
+ax_2.imshow(encoded_image)
