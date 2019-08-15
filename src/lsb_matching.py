@@ -29,6 +29,7 @@ def function_f(y1_dec, y2_dec):
 def encode(image_array, pixel_ind, message_to_encode):  # flatten image to be 1D array to get pixel values
     message = string_to_binary(message_to_encode)
 
+    print(len(pixel_ind), len(message))
     if len(pixel_ind) <= len(message):
         raise Exception("Not enough pixels to encode message")
 
