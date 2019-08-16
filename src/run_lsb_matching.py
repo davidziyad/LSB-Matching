@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 from .net import FrequencyNet
 from .lsb_matching import encode, decode
+from .lsb import LSBMatcher
 
 
 """ READ COVER IMAGE """
@@ -16,7 +17,9 @@ image = np.array(image)
 
 
 """ DEFINE MESSAGE TO EMBED """
-message_to_encode = 'a' * 500000
+message_to_encode = 'a' * 50000
+
+assert len(message_to_encode) * 8 <= image_.shape[0] * image_.shape[1]
 
 
 """ COMPUTE FREQUENCY IMAGE """
@@ -34,21 +37,17 @@ frequency_image = cv.resize(frequency_image, (image_.shape[1], image_.shape[0]))
 cv.imwrite('results/freq_image.jpg', frequency_image)
 
 """ EMBED MESSAGE """
-flat_image = frequency_image.flatten()
-image_to_encode = image_.flatten()
-indices = np.argsort(flat_image)
-
-stego_image, original_pixel_values, indices = \
-    encode(image_to_encode, indices, message_to_encode)
+lsb_matcher = LSBMatcher()
+stego_image = lsb_matcher.embed(message_to_encode, image_, frequency_image)
 
 
 """ RECOVER MESSAGE """
-decoded_message = decode(stego_image, original_pixel_values, indices)
+# decoded_message = decode(stego_image, original_pixel_values, indices)
 
 
 """ VALIDATE RESULTS """
-print('Original Message:', message_to_encode)
-print('Recovered Message:', decoded_message)
+# print('Original Message:', message_to_encode)
+# print('Recovered Message:', decoded_message)
 
 # assert message_to_encode == decoded_message
 
