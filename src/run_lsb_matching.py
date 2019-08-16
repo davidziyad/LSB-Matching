@@ -10,7 +10,7 @@ from .lsb import LSBMatcher
 """ READ COVER IMAGE """
 rows = 128
 cols = 128
-image = cv.imread('im.jpg')
+image = cv.imread('images.jpeg')
 image_ = cv.cvtColor(image, cv.COLOR_BGR2RGB)
 image = cv.resize(image_, (rows, cols))
 image = np.array(image)
@@ -19,7 +19,7 @@ image = np.array(image)
 """ DEFINE MESSAGE TO EMBED """
 message_to_encode = 'a' * 50000
 
-assert len(message_to_encode) * 8 <= image_.shape[0] * image_.shape[1]
+# assert len(message_to_encode) * 8 <= image_.shape[0] * image_.shape[1]
 
 
 """ COMPUTE FREQUENCY IMAGE """

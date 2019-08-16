@@ -57,7 +57,7 @@ class LSBMatcher:
 
         binary_message = self._message2binary(msg)
 
-        assert len(cover_image_vec) >= len(binary_message)
+        # assert len(cover_image_vec) >= len(binary_message)
 
         ranked_pixels = frequency_image_vec.argsort()
 
